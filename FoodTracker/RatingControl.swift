@@ -67,7 +67,7 @@ class RatingControl: UIView {
         
     }
     
-    override func intrinsicContentSize() -> CGSize {
+    override public var intrinsicContentSize: CGSize {
         let buttonSize = Int(frame.size.height)
         let width = (44 * starCount) + (spacing * (starCount - 1))
         return CGSize(width: width, height: 44)

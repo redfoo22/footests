@@ -19,20 +19,16 @@ class Meal: NSObject, NSCoding {
  
     
     
-  static  let documentsDirectory =
-        FileManager().urlsForDirectory(.documentDirectory, inDomains:
-            .userDomainMask).first!
-    
-    //old code
-    // static let archiveURL = documentsDirectory.appendingPathComponent("meals")
-    
-    
-    do {
-    static let archiveURL = try documentsDirectory.appendingPathComponent("meals")
-    
-    } catch {
-    print("Error Recording")
-    }
+static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+
+static let archiveURL = documentsDirectory.appendingPathComponent("meals")
+   
+//    do {
+//    static let archiveURL = try documentsDirectory.appendingPathComponent("meals")
+//    
+//    } catch {
+//    print("Error Recording")
+//    }
     
  
     

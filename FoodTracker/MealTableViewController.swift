@@ -18,7 +18,8 @@ class MealTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Use the edit button item provided by the table view controller.
-        navigationItem.leftBarButtonItem = editButtonItem()
+        navigationItem.leftBarButtonItem = editButtonItem
+        
         
         
 
@@ -124,7 +125,7 @@ class MealTableViewController: UITableViewController {
         
         if segue.identifier == "ShowDetail" {
             
-            let mealDetailViewController = segue.destinationViewController as!
+            let mealDetailViewController = segue.destination as!
             MealViewController
             
             // Get the cell that generated this segue.
@@ -145,7 +146,7 @@ class MealTableViewController: UITableViewController {
     
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
+        if let sourceViewController = sender.source as? MealViewController, meal = sourceViewController.meal {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
@@ -169,8 +170,30 @@ class MealTableViewController: UITableViewController {
                 
             }
             
+            saveMeals()
             
         }
     }
+    
+    // MARK: NSCoding
+    
+    func saveMeals() {
+        
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile:
+            Meal.archiveURL.path)
+        
+        if !isSuccessfulSave {
+            
+            print("Failed to save meals...") }
+        
+        
+        
+
+    }
+    func loadMeals() -> [Meal]? {
+        
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.archiveURL.path) as?
+            [Meal]
+        }
 
 }

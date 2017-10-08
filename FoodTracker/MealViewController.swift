@@ -89,7 +89,7 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
     saveButton.isEnabled = !text.isEmpty
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    private func textFieldDidEndEditing(textField: UITextField) {
         checkValidMealName()
         navigationItem.title = textField.text
     }
@@ -102,7 +102,7 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
         dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         // The info dictionary contains multiple representations of the image, and this uses the original.
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -133,8 +133,8 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
     
     // This method lets you configure a view controller before it's presented.
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if saveButton === sender {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //if saveButton as AnyObject? == sender {
             
             let name = nameTextField.text ?? ""
             let photo = photoImageView.image
@@ -157,26 +157,26 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
     }
     
     // MARK Actions
-    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // Hide the keyboard.
         nameTextField.resignFirstResponder()
-        
+
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
-        
+
         // Only allow photos to be picked, not taken.
         imagePickerController.sourceType = .photoLibrary
-        
+
         // Make sure ViewController is notified when the user picks an image.
         imagePickerController.delegate = self
-        
+
         present(imagePickerController, animated: true, completion: nil)
-        
-        
+
+
     }
-    
+
    
 
 
-}
+
 

@@ -13,6 +13,15 @@ class MealTableViewController: UITableViewController {
     //MARK Properties
     
     var meals = [Meal]()
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +29,16 @@ class MealTableViewController: UITableViewController {
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
         
+        // load any saved meals, otherwise load sample data.
+        if let savedMeals = loadMeals() {
+            meals += savedMeals
+        } else {
+            
+            //load sample meals
+            loadSampleMeals()
+            
         
+        }
         
 
             // Load the sample data.
@@ -92,6 +110,7 @@ class MealTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             meals.remove(at: indexPath.row)
+            saveMeals()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -121,7 +140,7 @@ class MealTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     
-     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowDetail" {
             
@@ -146,7 +165,7 @@ class MealTableViewController: UITableViewController {
     
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         
-        if let sourceViewController = sender.source as? MealViewController, meal = sourceViewController.meal {
+        if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 
